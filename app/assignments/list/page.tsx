@@ -2,7 +2,7 @@
 
 import { useGradingStore } from "@/lib/store/useGradingStore";
 import { Button, Chip, Input, Table, TableHeader, TableColumn, TableBody, TableRow, TableCell } from "@heroui/react";
-import { Magnifier, ArrowUpRight, BookOpen } from "@gravity-ui/icons";
+import { Search, ArrowUpRight, BookOpen } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { formatRelativeTime } from "@/lib/utils/time";
@@ -76,7 +76,7 @@ export default function AllAssignmentsTable() {
             ))}
           </div>
           <div className="relative w-full md:w-64 outline-none">
-            <Magnifier className="absolute left-3 top-1/2 -translate-y-1/2 size-3.5 text-muted pointer-events-none" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-3.5 text-muted pointer-events-none" />
             <input
               placeholder="Search assignments..."
               className="pl-9 pr-4 py-2 text-sm bg-[#1e1e1e] border border-white/5 rounded-lg text-foreground placeholder:text-muted outline-none focus:border-accent/40 transition-colors w-full"

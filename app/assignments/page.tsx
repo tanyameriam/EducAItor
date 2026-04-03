@@ -8,9 +8,9 @@ import {
   Check, 
   Clock,
   Plus,
-  TriangleExclamation,
+  AlertTriangle,
   Calendar
-} from "@gravity-ui/icons";
+} from "lucide-react";
 import { useGradingStore } from "@/lib/store/useGradingStore";
 import Link from "next/link";
 import { formatRelativeTime } from "@/lib/utils/time";

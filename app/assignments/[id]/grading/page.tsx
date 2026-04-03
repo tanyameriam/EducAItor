@@ -2,7 +2,7 @@
 
 import { useGradingStore } from "@/lib/store/useGradingStore";
 import { Chip, Button, Avatar, Input } from "@heroui/react";
-import { Magnifier, TriangleExclamation, Shield, Check } from "@gravity-ui/icons";
+import { Search, AlertTriangle, Shield, Check } from "lucide-react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
@@ -156,7 +156,7 @@ export default function GradingView() {
               </div>
             )}
             <div className="relative flex-1 md:flex-none">
-              <Magnifier className="absolute left-3 top-1/2 -translate-y-1/2 size-3.5 text-muted pointer-events-none" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-3.5 text-muted pointer-events-none" />
               <input
                 placeholder="Search student or ID..."
                 className="pl-8 pr-4 py-2 text-sm bg-surface border border-border/50 rounded-lg text-foreground placeholder:text-muted outline-none focus:border-accent/50 transition-colors w-full md:w-56"
@@ -186,7 +186,7 @@ export default function GradingView() {
                 }`}
                 onPress={() => setFilterMode(mode)}
               >
-                {mode === "Needs Review" && <TriangleExclamation className="size-3 mr-1" />}
+                {mode === "Needs Review" && <AlertTriangle className="size-3 mr-1" />}
                 {mode}
               </Button>
             ))}
