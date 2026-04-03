@@ -8,7 +8,7 @@ This will be:
 
 ---
 
-# 📄 PRODUCT REQUIREMENTS DOCUMENT (PRD)
+# 📄 PRODUCT REQUIREMENTS DOCUMENT (PRD/TEST***)
 
 ## Module 2 — Post Submission System (Phase 3 → 8)
 
