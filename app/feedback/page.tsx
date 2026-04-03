@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Button, Avatar, Chip, Switch } from "@heroui/react";
-import { ArrowLeft, Check, List as ListUl, Pencil, Send as PaperPlane, Mail as Envelope, Clock } from "lucide-react";
+import { ArrowLeft, Check, List, Pencil, Send as PaperPlane, Mail as Envelope, Clock } from "lucide-react";
 import { useGradingStore, ReleaseSchedule } from "@/lib/store/useGradingStore";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -149,7 +149,7 @@ export default function FeedbackEditor() {
         <header className="h-16 border-b border-border/40 backdrop-blur-xl px-4 flex items-center justify-between flex-shrink-0 z-20">
           <div className="flex items-center gap-4">
             <Button isIconOnly variant="ghost" size="sm" onPress={() => setIsSidebarOpen(!isSidebarOpen)} className="text-muted-foreground mr-2">
-              {isSidebarOpen ? <ArrowLeft className="size-4" /> : <ListUl className="size-4" />}
+              {isSidebarOpen ? <ArrowLeft className="size-4" /> : <List className="size-4" />}
             </Button>
             <Avatar size="sm" className="bg-gradient-to-br from-accent/80 to-accent text-white font-semibold text-xs">
               <Avatar.Fallback>{selectedSub?.studentName.charAt(0) || "?"}</Avatar.Fallback>
@@ -206,7 +206,7 @@ export default function FeedbackEditor() {
               <div className="space-y-8">
                 {[
                   { key: "strengths" as const, label: "Strengths to Highlight", icon: <Check className="size-3" />, color: "bg-success/20 text-success" },
-                  { key: "gaps" as const, label: "Identified Gaps", icon: <ListUl className="size-3" />, color: "bg-warning/20 text-warning" },
+                  { key: "gaps" as const, label: "Identified Gaps", icon: <List className="size-3" />, color: "bg-warning/20 text-warning" },
                   { key: "improvements" as const, label: "Actionable Improvements", icon: <Envelope className="size-3" />, color: "bg-accent/20 text-accent" },
                 ].map(({ key, label, icon, color }) => (
                   <section key={key}>

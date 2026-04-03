@@ -6,7 +6,7 @@ import {
   Button, Avatar, Chip, Input
 } from "@heroui/react";
 import { 
-  ArrowLeft, Check, ListUl, Search, ChevronRight, X, Sliders
+  ArrowLeft, Check, List, Search, ChevronRight, X, Sliders
 } from "lucide-react";
 import { useGradingStore } from "@/lib/store/useGradingStore";
 import Link from "next/link";
@@ -196,7 +196,7 @@ function AppealsWorkspaceInner() {
           <header className="h-16 border-b border-border/40 backdrop-blur-xl px-4 flex items-center justify-between flex-shrink-0 z-20">
               <div className="flex items-center gap-3 min-w-0">
                  <Button isIconOnly variant="ghost" size="sm" onPress={() => setIsSidebarOpen(!isSidebarOpen)} className="text-muted-foreground flex-shrink-0">
-                    {isSidebarOpen ? <ArrowLeft className="size-4" /> : <ListUl className="size-4" />}
+                    {isSidebarOpen ? <ArrowLeft className="size-4" /> : <List className="size-4" />}
                  </Button>
                  <Avatar size="sm" className="bg-gradient-to-br from-warning/80 to-warning text-white font-semibold text-xs flex-shrink-0">
                     <Avatar.Fallback>{selectedSub?.studentName.charAt(0) || "?"}</Avatar.Fallback>
@@ -262,7 +262,7 @@ function AppealsWorkspaceInner() {
                   {/* Student Argument Panel */}
                   <div className="bg-surface border border-border/50 rounded-xl p-6 shadow-sm">
                      <h3 className="text-sm font-bold uppercase tracking-wider text-muted-foreground mb-3 flex items-center gap-2">
-                        <ListUl className="size-4" /> Student Argument
+                        <List className="size-4" /> Student Argument
                      </h3>
                      <p className="text-foreground text-sm leading-relaxed whitespace-pre-wrap pl-6 border-l-2 border-warning/50">
                         {appeal.studentArgument}
@@ -295,7 +295,7 @@ function AppealsWorkspaceInner() {
                          {/* Grading Desk Preview side */}
                          <div className="flex-1 bg-surface border border-border/40 rounded-xl p-5 flex flex-col items-center justify-center text-center min-h-[200px]">
                             <div className="size-12 bg-accent/10 rounded-full flex items-center justify-center text-accent mb-3">
-                               <ListUl className="size-5" />
+                               <List className="size-5" />
                             </div>
                             <h4 className="text-sm font-bold text-foreground mb-1">Original Submission Paper</h4>
                             <p className="text-xs text-muted mb-4 max-w-[200px]">Review the original unadulterated paper context.</p>

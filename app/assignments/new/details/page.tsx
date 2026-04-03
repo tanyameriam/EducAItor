@@ -3,16 +3,16 @@
 import { useAssignmentWizard } from '../components/assignment-wizard-context';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { ArrowLeft, ArrowRight, BookOpen, Code, Picture, Flask, Folder, Briefcase, MagicWand } from 'lucide-react';
+import { ArrowLeft, ArrowRight, BookOpen, Code, Image as Picture, FlaskConical, Folder, Briefcase, Wand2 } from 'lucide-react';
 
 const assignmentTypes = [
   { id: 'written', label: 'Written / Essay', icon: BookOpen },
   { id: 'code', label: 'Code', icon: Code },
   { id: 'diagram', label: 'Diagram / Visual', icon: Picture },
-  { id: 'lab', label: 'Lab Report', icon: Flask },
+  { id: 'lab', label: 'Lab Report', icon: FlaskConical },
   { id: 'mixed', label: 'Mixed', icon: Folder },
   { id: 'case-study', label: 'Case Study', icon: Briefcase },
-  { id: 'custom', label: 'Something else (Custom)', icon: MagicWand },
+  { id: 'custom', label: 'Something else (Custom)', icon: Wand2 },
 ];
 
 export default function DetailsStepPage() {
