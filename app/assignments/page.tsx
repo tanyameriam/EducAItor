@@ -1,275 +1,234 @@
 "use client";
 
 import { ThemeToggle } from "@/components/theme-toggle";
-import { Card, Button, Chip, Avatar } from "@heroui/react";
+import { Card, Button, Chip, Avatar, Progress } from "@heroui/react";
 import { 
   ArrowUpRight, 
   BookOpen, 
-  Calendar, 
   Check, 
   Clock,
-  GraduationCap,
-  TriangleExclamation
+  Plus,
+  TriangleExclamation,
+  Calendar
 } from "@gravity-ui/icons";
 import { useGradingStore } from "@/lib/store/useGradingStore";
 import Link from "next/link";
 import { formatRelativeTime } from "@/lib/utils/time";
+import { motion } from "framer-motion";
 
-export default function AssignmentsDashboard() {
+export default function InstructorDashboard() {
   const store = useGradingStore();
   const assignments = store.getAssignmentList();
   const courses = store.courses;
-  const sections = store.sections;
 
-  // Calculate stats
-  const activeAssignments = assignments.filter(a => a.status === 'grading');
-  const completedAssignments = assignments.filter(a => a.status === 'completed');
-  const totalSubmissions = assignments.reduce((sum, a) => sum + a.totalSubmissions, 0);
-  
-  // Sort by urgency: grading first, then by progress (lower = more urgent)
-  const sortedAssignments = [...assignments].sort((a, b) => {
-    if (a.status === 'grading' && b.status !== 'grading') return -1;
-    if (b.status === 'grading' && a.status !== 'grading') return 1;
-    return a.evaluationProgress - b.evaluationProgress;
-  });
+  // Stats for the "TODAY" sidebar section
+  const needReviewCount = assignments.filter(a => a.status === 'grading').reduce((sum, a) => sum + (a.totalSubmissions - Math.round(a.totalSubmissions * (a.evaluationProgress / 100))), 0);
+  const readyToShareCount = assignments.filter(a => a.status === 'grading' && a.evaluationProgress >= 90).length;
+  const activeNowCount = assignments.filter(a => a.status === 'grading').length;
+  const totalStudents = Object.values(store.sections).reduce((sum, s) => sum + s.studentCount, 0);
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'completed': return 'success';
-      case 'grading': return 'accent';
-      case 'evaluating': return 'warning';
-      case 'draft': return 'default';
-      default: return 'default';
-    }
-  };
-
-  const getStatusLabel = (status: string) => {
-    switch (status) {
-      case 'completed': return 'Completed';
-      case 'grading': return 'In Progress';
-      case 'evaluating': return 'Evaluating';
-      case 'draft': return 'Draft';
-      default: return status;
-    }
-  };
-
-  const getTypeLabel = (type: string) => {
-    switch (type) {
-      case 'Essay': return 'Essay';
-      case 'Report': return 'Report';
-      case 'Proposal': return 'Proposal';
-      case 'Documentation': return 'Docs';
-      default: return type;
-    }
-  };
+  // Active assignments for the main section
+  const activeAssignments = assignments.filter(a => a.status === 'grading' || a.status === 'evaluating').slice(0, 3);
+  const completedAssignments = assignments.filter(a => a.status === 'completed').slice(0, 1);
 
   return (
-    <div className="flex flex-col min-h-screen bg-background relative overflow-hidden z-0">
-      {/* Decorative Gradient Blob */}
-      <div className="absolute top-[-10%] right-[-10%] w-[40vw] h-[40vw] rounded-full bg-accent/5 blur-[120px] pointer-events-none -z-10" />
-
-      {/* Top Header */}
-      <header className="h-16 border-b border-border/40 backdrop-blur-xl px-4 md:px-8 flex items-center justify-between shrink-0">
-        <div>
-          <h1 className="text-sm font-bold tracking-tight text-foreground leading-none">My Assignments</h1>
-          <p className="text-xs text-muted mt-1">Manage all your grading assignments</p>
+    <div className="min-h-screen bg-[#121212] text-[#e0e0e0] font-sans selection:bg-accent/30 selection:text-accent">
+      {/* Top Navigation */}
+      <header className="h-16 border-b border-white/5 backdrop-blur-xl px-4 md:px-8 flex items-center justify-between sticky top-0 z-[100] bg-[#121212]/80">
+        <div className="flex items-center gap-2">
+          <span className="font-black text-xl tracking-tight text-white">EducAItors</span>
+          <span className="text-muted/60 text-xs mt-1 border-l border-white/10 pl-2 ml-2 uppercase tracking-widest font-bold">Instructor</span>
         </div>
-        <div className="flex items-center gap-3">
-          <ThemeToggle />
-          <Avatar size="sm" className="bg-gradient-to-br from-accent/80 to-accent text-white font-semibold text-xs border border-accent/30 hidden sm:flex">
-            <Avatar.Fallback>SK</Avatar.Fallback>
+        <div className="flex items-center gap-6">
+          <div className="hidden sm:flex flex-col items-end">
+            <span className="text-xs text-muted/60 font-semibold tracking-wide">Good morning, Dr. Lakshmi</span>
+          </div>
+          <Avatar 
+            size="sm" 
+            className="bg-gradient-to-br from-indigo-500 to-accent text-white font-black text-[10px] ring-2 ring-white/5 ring-offset-2 ring-offset-[#121212] cursor-pointer"
+          >
+            <Avatar.Fallback>RL</Avatar.Fallback>
           </Avatar>
         </div>
       </header>
 
-      <main className="flex-1 p-4 md:p-8 w-full max-w-7xl mx-auto space-y-8">
+      <main className="max-w-[1400px] mx-auto p-4 md:p-8 grid grid-cols-1 lg:grid-cols-[1fr,340px] gap-8 mt-4">
         
-        {/* Header Section */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
-          <div>
-            <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-foreground lg:text-4xl">
-              Assignments Dashboard
-            </h1>
-            <p className="mt-2 text-muted font-medium">
-              {assignments.length} assignments across {Object.keys(courses).length} courses
-            </p>
-          </div>
-          <Link href="/assignments/new">
-            <Button 
-              variant="primary" 
-              className="font-medium rounded-lg bg-accent hover:opacity-90 shadow-md shadow-accent/20 w-full md:w-auto"
-            >
-              <BookOpen className="size-4 mr-2" /> Create New Assignment
-            </Button>
-          </Link>
-        </div>
-
-        {/* Stats Overview */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
-          <div className="bg-surface border border-border/50 rounded-xl p-3 md:p-4 shadow-sm">
-            <p className="text-[10px] md:text-xs font-semibold text-muted uppercase tracking-wider mb-1">In Progress</p>
-            <p className="text-xl md:text-2xl font-bold tracking-tight text-accent">{activeAssignments.length}</p>
-            <p className="text-[10px] md:text-xs text-muted mt-1">active assignments</p>
-          </div>
-          <div className="bg-surface border border-border/50 rounded-xl p-3 md:p-4 shadow-sm">
-            <p className="text-[10px] md:text-xs font-semibold text-muted uppercase tracking-wider mb-1">Completed</p>
-            <p className="text-xl md:text-2xl font-bold tracking-tight text-success">{completedAssignments.length}</p>
-            <p className="text-[10px] md:text-xs text-muted mt-1">this semester</p>
-          </div>
-          <div className="bg-surface border border-border/50 rounded-xl p-3 md:p-4 shadow-sm">
-            <p className="text-[10px] md:text-xs font-semibold text-muted uppercase tracking-wider mb-1">Total Papers</p>
-            <p className="text-xl md:text-2xl font-bold tracking-tight text-foreground">{totalSubmissions}</p>
-            <p className="text-[10px] md:text-xs text-muted mt-1">to evaluate</p>
-          </div>
-          <div className="bg-surface border border-border/50 rounded-xl p-3 md:p-4 shadow-sm">
-            <p className="text-[10px] md:text-xs font-semibold text-muted uppercase tracking-wider mb-1">Pending Review</p>
-            <p className="text-xl md:text-2xl font-bold tracking-tight text-warning">12</p>
-            <p className="text-[10px] md:text-xs text-muted mt-1">need attention</p>
-          </div>
-        </div>
-
-        {/* Priority Section: Needs Attention */}
-        {activeAssignments.length > 0 && (
-          <div className="space-y-4">
-            <div className="flex items-center gap-2">
-              <TriangleExclamation className="size-5 text-warning" />
-              <h2 className="text-lg font-semibold text-foreground">Needs Attention</h2>
-              <span className="text-sm text-muted">({activeAssignments.length} active)</span>
+        {/* Main Content (Left) */}
+        <div className="space-y-10">
+          
+          {/* Start New Assignment Card */}
+          <Link href="/assignments/new" className="block outline-none">
+            <div className="bg-[#1e1e1e] border border-dashed border-white/10 rounded-2xl p-6 flex items-center gap-6 hover:border-accent/40 transition-all cursor-pointer group shadow-2xl shadow-black/40">
+              <div className="size-12 rounded-full bg-accent/20 flex items-center justify-center text-accent group-hover:scale-110 transition-transform shadow-lg shadow-accent/20">
+                <Plus className="size-6" />
+              </div>
+              <div>
+                <h2 className="font-bold text-lg text-white group-hover:text-accent transition-colors">Start a new assignment</h2>
+                <p className="text-sm text-muted/60 mt-0.5 leading-relaxed">Add details and marking criteria — system checks student answers</p>
+              </div>
             </div>
-            
-            <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-              {activeAssignments.slice(0, 3).map((assignment) => {
+          </Link>
+
+          {/* Active Assignments Section */}
+          <section className="space-y-6">
+            <div className="flex items-center justify-between pb-2">
+              <h2 className="text-[11px] font-black uppercase tracking-[0.1em] text-muted/50 leading-none">Active Assignments</h2>
+              <Link href="/assignments/list" className="text-[11px] font-bold text-accent hover:underline flex items-center gap-1 uppercase tracking-wider">
+                See all assignments <ArrowUpRight className="size-3" />
+              </Link>
+            </div>
+
+            <div className="space-y-4">
+              {activeAssignments.map((assignment) => {
                 const course = courses[assignment.courseId];
-                const progress = assignment.evaluationProgress;
-                const isUrgent = progress < 50;
+                const doneCount = Math.round(assignment.totalSubmissions * (assignment.evaluationProgress / 100));
+                const needReview = 7; // Mocked from image: "7 need your review"
+                const handwritingUnclear = 2; // Mocked from image: "2 handwriting unclear"
                 
                 return (
-                  <Link 
-                    key={assignment.id} 
-                    href={`/assignments/${assignment.id}`}
-                    className="group"
-                  >
-                    <Card className={`rounded-xl shadow-sm border p-0 hover:shadow-md transition-all cursor-pointer h-full ${isUrgent ? 'border-warning/50 bg-warning/5' : 'border-border/50 bg-surface/60'}`}>
-                      <Card.Content className="p-5 space-y-4">
-                        {/* Top Row: Type + Status */}
-                        <div className="flex items-start justify-between">
-                          <div className="flex items-center gap-2">
-                            <span className="text-xs font-medium px-2 py-1 rounded-md bg-accent/10 text-accent">
-                              {getTypeLabel(assignment.type)}
-                            </span>
-                            <span className="text-xs text-muted">{course?.code}</span>
-                          </div>
-                          {isUrgent && (
-                            <span className="text-xs font-medium text-warning">Urgent</span>
-                          )}
-                        </div>
-
-                        {/* Title */}
-                        <h3 className="font-semibold text-foreground leading-tight group-hover:text-accent transition-colors">
-                          {assignment.title}
-                        </h3>
-
-                        {/* Progress */}
-                        <div className="space-y-2">
-                          <div className="flex justify-between text-xs">
-                            <span className="text-muted">Progress</span>
-                            <span className={`font-medium ${isUrgent ? 'text-warning' : 'text-foreground'}`}>
-                              {progress}%
-                            </span>
-                          </div>
-                          <div className="h-2 bg-default rounded-full overflow-hidden">
-                            <div 
-                              className={`h-full rounded-full transition-all ${isUrgent ? 'bg-warning' : 'bg-accent'}`}
-                              style={{ width: `${progress}%` }}
-                            />
+                  <Card key={assignment.id} className="bg-[#1e1e1e] border-white/5 rounded-2xl p-0 hover:border-white/10 transition-all shadow-xl shadow-black/20">
+                    <Card.Content className="p-6">
+                      <div className="flex justify-between items-start mb-4">
+                        <div>
+                          <h3 className="text-lg font-bold text-white tracking-tight">{assignment.title}</h3>
+                          <div className="flex items-center gap-2 mt-1">
+                            <span className="text-[11px] font-bold text-muted/60">{course?.code}</span>
+                            <span className="size-1 bg-white/10 rounded-full" />
+                            <span className="text-[11px] font-bold text-muted/60">{assignment.totalSubmissions} students</span>
+                            <span className="size-1 bg-white/10 rounded-full" />
+                            <span className="text-[11px] font-bold text-muted/60">Due {formatRelativeTime(assignment.dueDate)}</span>
                           </div>
                         </div>
-
-                        {/* Footer: Submissions + Due Date */}
-                        <div className="flex items-center justify-between text-xs text-muted pt-2 border-t border-border/30">
-                          <span>{assignment.totalSubmissions} submissions</span>
-                          <span className="flex items-center gap-1">
-                            <Calendar className="size-3" />
-                            Due {formatRelativeTime(assignment.dueDate)}
-                          </span>
-                        </div>
-                      </Card.Content>
-                    </Card>
-                  </Link>
-                );
-              })}
-            </div>
-          </div>
-        )}
-
-        {/* All Assignments Section */}
-        <div className="space-y-4">
-          <h2 className="text-lg font-semibold text-foreground">All Assignments</h2>
-          
-          <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-            {sortedAssignments.map((assignment) => {
-              const course = courses[assignment.courseId];
-              const progress = assignment.evaluationProgress;
-              
-              return (
-                <Link 
-                  key={assignment.id} 
-                  href={`/assignments/${assignment.id}`}
-                  className="group"
-                >
-                  <Card className="rounded-xl shadow-sm border border-border/50 bg-surface/60 p-0 hover:border-accent/50 hover:shadow-md transition-all cursor-pointer h-full">
-                    <Card.Content className="p-5 space-y-4">
-                      {/* Top Row */}
-                      <div className="flex items-start justify-between">
-                        <div className="flex items-center gap-2">
-                          <span className="text-xs font-medium px-2 py-1 rounded-md bg-default text-muted-foreground">
-                            {getTypeLabel(assignment.type)}
-                          </span>
-                          <span className="text-xs text-muted">{course?.code}</span>
-                        </div>
-                        <Chip 
-                          size="sm" 
-                          variant="soft" 
-                          color={getStatusColor(assignment.status)}
-                          className="border-none text-[10px] h-5"
-                        >
-                          {getStatusLabel(assignment.status)}
+                        <Chip className="bg-accent/10 text-accent font-black text-[9px] uppercase tracking-widest px-2 py-0 h-5 border-none">
+                          {assignment.status === 'grading' ? 'Check needed' : 'Checking now'}
                         </Chip>
                       </div>
 
-                      {/* Title */}
-                      <h3 className="font-semibold text-foreground leading-tight group-hover:text-accent transition-colors">
-                        {assignment.title}
-                      </h3>
+                      <div className="flex flex-wrap gap-2 mb-6">
+                        <Chip className="bg-danger/20 text-danger font-bold text-[10px] px-3 h-6 border-none">
+                          {needReview} need your review
+                        </Chip>
+                        <Chip className="bg-warning/20 text-warning font-bold text-[10px] px-3 h-6 border-none">
+                          {handwritingUnclear} handwriting unclear
+                        </Chip>
+                        <Chip className="bg-white/5 text-muted/60 font-bold text-[10px] px-3 h-6 border-none">
+                          {doneCount} marks done
+                        </Chip>
+                      </div>
 
-                      {/* Progress (only for non-completed) */}
-                      {assignment.status !== 'completed' && (
-                        <div className="space-y-2">
-                          <div className="flex justify-between text-xs">
-                            <span className="text-muted">Progress</span>
-                            <span className="font-medium text-foreground">{progress}%</span>
-                          </div>
-                          <div className="h-1.5 bg-default rounded-full overflow-hidden">
-                            <div 
-                              className="h-full bg-accent rounded-full transition-all"
-                              style={{ width: `${progress}%` }}
-                            />
-                          </div>
+                      <div className="space-y-3">
+                        <div className="h-1.5 bg-[#2a2a2a] rounded-full overflow-hidden">
+                          <div 
+                            className="h-full bg-accent rounded-full shadow-lg shadow-accent/20"
+                            style={{ width: `${assignment.evaluationProgress}%` }}
+                          />
                         </div>
-                      )}
-
-                      {/* Footer */}
-                      <div className="flex items-center justify-between text-xs text-muted pt-2 border-t border-border/30">
-                        <span>{assignment.totalSubmissions} submissions</span>
-                        <ArrowUpRight className="size-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+                        <div className="flex justify-between items-center pt-2">
+                          <Link href={`/grading/${assignment.id}`} className="text-xs font-bold text-accent flex items-center gap-2 hover:underline">
+                            Continue reviewing <ArrowUpRight className="size-3" />
+                          </Link>
+                          <span className="text-xs font-black text-muted/30 uppercase tracking-widest">{doneCount} / {assignment.totalSubmissions}</span>
+                        </div>
                       </div>
                     </Card.Content>
                   </Card>
-                </Link>
-              );
-            })}
-          </div>
+                );
+              })}
+
+              {/* Completed/Ready Section Example */}
+              {completedAssignments.map((assignment) => (
+                <Card key={assignment.id} className="bg-[#1e1e1e] border-white/5 rounded-2xl p-0 hover:border-white/10 transition-all opacity-90 shadow-lg">
+                  <Card.Content className="p-6">
+                    <div className="flex justify-between items-start mb-6">
+                      <div>
+                        <h3 className="text-lg font-bold text-white tracking-tight">{assignment.title}</h3>
+                        <div className="flex items-center gap-2 mt-1">
+                          <span className="text-[11px] font-bold text-muted/60 tracking-wider font-mono">{courses[assignment.courseId]?.code}</span>
+                          <span className="text-[11px] font-bold text-muted/60 italic">Checked {formatRelativeTime(assignment.createdAt)}</span>
+                        </div>
+                      </div>
+                      <Chip className="bg-success/20 text-success font-black text-[9px] uppercase tracking-widest px-2 py-0 h-5 border-none">
+                        Marks ready
+                      </Chip>
+                    </div>
+
+                    <div className="flex flex-wrap gap-2 mb-6">
+                      <Chip className="bg-success/20 text-success font-bold text-[10px] px-3 h-6 border-none">
+                        All {assignment.totalSubmissions} done
+                      </Chip>
+                      <Chip className="bg-white/5 text-muted/60 font-bold text-[10px] px-3 h-6 border-none italic">
+                        3 marks changed by you
+                      </Chip>
+                    </div>
+
+                    <div className="flex justify-between items-center pt-4 border-t border-white/5">
+                      <Button variant="ghost" className="text-xs font-bold text-accent hover:bg-accent/10 px-0 h-auto">
+                        Share marks with students →
+                      </Button>
+                      <span className="text-[10px] font-bold text-muted/30 uppercase tracking-widest">Not shared yet</span>
+                    </div>
+                  </Card.Content>
+                </Card>
+              ))}
+            </div>
+
+            <Button variant="ghost" className="w-full bg-[#1a1a1a] border-white/5 py-8 rounded-2xl text-xs font-bold text-muted hover:bg-white/[0.03] uppercase tracking-[0.15em]">
+              View all assignments — past, drafts, and previous semesters
+            </Button>
+          </section>
         </div>
+
+        {/* Sidebar (Right) */}
+        <aside className="space-y-10">
+          
+          {/* TODAY Section */}
+          <section className="space-y-6">
+            <h2 className="text-[11px] font-black uppercase tracking-[0.1em] text-muted/50 leading-none">Today</h2>
+            <div className="grid grid-cols-2 gap-x-8 gap-y-10 px-2">
+              <div className="space-y-1">
+                <p className="text-3xl font-black text-white leading-none">7</p>
+                <p className="text-[11px] font-bold text-muted/60 leading-tight">Need your review</p>
+              </div>
+              <div className="space-y-1">
+                <p className="text-3xl font-black text-white leading-none">41</p>
+                <p className="text-[11px] font-bold text-muted/60 leading-tight">Ready to share</p>
+              </div>
+              <div className="space-y-1">
+                <p className="text-3xl font-black text-white leading-none">3</p>
+                <p className="text-[11px] font-bold text-muted/60 leading-tight">Active now</p>
+              </div>
+              <div className="space-y-1">
+                <p className="text-3xl font-black text-white leading-none">79</p>
+                <p className="text-[11px] font-bold text-muted/60 leading-tight">Students</p>
+              </div>
+            </div>
+          </section>
+
+          {/* UPDATES Section */}
+          <section className="space-y-6">
+            <h2 className="text-[11px] font-black uppercase tracking-[0.1em] text-muted/50 leading-none">Updates</h2>
+            <div className="space-y-3">
+              {[
+                { title: "Rahul's answer — handwriting unclear", sub: "Check and mark manually", info: "Unit 3 · 30 min ago", color: "bg-danger" },
+                { title: "3 students haven't submitted", sub: "OS Mid-sem · Deadline today 5 PM", info: "CS204 · Just now", color: "bg-warning" },
+                { title: "Unit 2 marks finalised", sub: "Ready to share with students", info: "Linked Lists · 29 Mar", color: "bg-success" },
+                { title: "Priya resubmitted her answer", sub: "Unit 3 · After correction", info: "CS301 · 1 hour ago", color: "bg-warning" },
+              ].map((update, i) => (
+                <div key={i} className="bg-[#1e1e1e] border border-white/[0.02] rounded-2xl p-5 hover:bg-[#252525] transition-colors cursor-pointer group shadow-lg">
+                  <div className="flex gap-3">
+                    <span className={`size-2 rounded-full mt-1.5 shrink-0 shadow-sm ${update.color}`} />
+                    <div className="space-y-1 overflow-hidden">
+                      <p className="text-[13px] font-bold text-white group-hover:text-accent transition-colors truncate">{update.title}</p>
+                      <p className="text-[12px] font-medium text-muted/60 leading-snug">{update.sub}</p>
+                      <p className="text-[10px] font-bold text-muted/30 uppercase tracking-widest pt-1">{update.info}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+        </aside>
 
       </main>
     </div>
