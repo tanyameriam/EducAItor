@@ -6,8 +6,8 @@ import {
   Button, Avatar, Chip, Input
 } from "@heroui/react";
 import {
-  ArrowLeft, Shield, ClockArrowRotateLeft, ArrowDown, Eye, Check, Xmark, ChevronRight
-} from "@gravity-ui/icons";
+  ArrowLeft, Shield, ClockRotateCcw, ArrowDown, Eye, Check, X, ChevronRight
+} from "lucide-react";
 import Link from "next/link";
 import { useGradingStore } from "@/lib/store/useGradingStore";
 import { motion, AnimatePresence } from "framer-motion";
@@ -212,11 +212,11 @@ export default function AuditComplianceWorkspace() {
                {/* Replay Eval Panel */}
                <div className="mt-8 bg-surface border border-border/50 rounded-xl p-6 shadow-sm border-l-4 border-l-accent flex justify-between items-center relative overflow-hidden">
                   <div className="absolute right-0 top-0 text-accent/5 pointer-events-none scale-[2]">
-                     <ClockArrowRotateLeft className="size-32" />
+                     <ClockRotateCcw className="size-32" />
                   </div>
                   <div>
                      <h3 className="text-lg font-bold tracking-tight flex items-center gap-2">
-                        <ClockArrowRotateLeft className="size-5 text-accent" /> Evaluation Replay Engine
+                        <ClockRotateCcw className="size-5 text-accent" /> Evaluation Replay Engine
                      </h3>
                      <p className="text-sm text-muted mt-1 max-w-xl">
                         Compare AI's initial scores against instructor-approved final scores. Verify determinism — same input should always produce same output.
@@ -253,7 +253,7 @@ export default function AuditComplianceWorkspace() {
               <div className="flex items-center justify-between p-6 border-b border-border/40">
                 <div>
                   <h3 className="text-lg font-bold tracking-tight text-foreground flex items-center gap-2">
-                    <ClockArrowRotateLeft className="size-5 text-accent" /> Evaluation Replay — AI vs Approved
+                    <ClockRotateCcw className="size-5 text-accent" /> Evaluation Replay — AI vs Approved
                   </h3>
                   <p className="text-xs text-muted mt-1">Every criterion for every submission. Green = AI was right. Amber = instructor drift.</p>
                 </div>
@@ -263,7 +263,7 @@ export default function AuditComplianceWorkspace() {
                     <span className="flex items-center gap-1.5 font-semibold text-warning"><span className="size-2 rounded-full bg-warning inline-block" /> Drift: {driftCount}</span>
                   </div>
                   <Button isIconOnly variant="ghost" size="sm" onPress={() => setIsReplayOpen(false)}>
-                    <Xmark className="size-4" />
+                    <X className="size-4" />
                   </Button>
                 </div>
               </div>
@@ -343,7 +343,7 @@ export default function AuditComplianceWorkspace() {
                   <p className="text-xs text-muted mt-0.5">Per-criterion score variance — Civil Dept vs IT/Mech cohorts</p>
                 </div>
                 <Button isIconOnly variant="ghost" size="sm" onPress={() => setIsBiasFlyoutOpen(false)}>
-                  <Xmark className="size-4" />
+                  <X className="size-4" />
                 </Button>
               </div>
 
@@ -409,3 +409,4 @@ const LockIcon = ({ className }: { className?: string }) => (
       <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
    </svg>
 );
+

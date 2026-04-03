@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { useParams } from "next/navigation";
 import { Card, Chip } from "@heroui/react";
-import { Shield, Clock, Person, FileText, CircleExclamation, Check } from "@gravity-ui/icons";
+import { Shield, Clock, User as Person, FileText, AlertCircle as CircleExclamation, Check } from "lucide-react";
 import { useGradingStore } from "@/lib/store/useGradingStore";
 
 

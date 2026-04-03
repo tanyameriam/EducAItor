@@ -3,7 +3,7 @@
 import { useGradingStore, Submission } from "@/lib/store/useGradingStore";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Chip, Button, Avatar, Input } from "@heroui/react";
-import { ArrowLeft, Magnifier, TriangleExclamation, Shield, Check } from "@gravity-ui/icons";
+import { ArrowLeft, Search as Magnifier, AlertTriangle as TriangleExclamation, Shield, Check } from "lucide-react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";

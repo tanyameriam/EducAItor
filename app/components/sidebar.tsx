@@ -2,9 +2,10 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Moon, Sun } from "lucide-react";
 import {
-  House, Shield,
-} from "@gravity-ui/icons";
+  Home, Shield,
+} from "lucide-react";
 
 export function Sidebar() {
   return (
@@ -22,7 +23,7 @@ function DesktopSidebar() {
   const pathname = usePathname();
 
   const navItems = [
-    { href: "/assignments", icon: House, label: "Home" },
+    { href: "/assignments", icon: Home, label: "Home" },
     { href: "/audit", icon: Shield, label: "Audit" },
   ];
 
@@ -70,7 +71,7 @@ function MobileBottomNav() {
   const pathname = usePathname();
 
   const iconNavItems = [
-    { href: "/assignments", icon: House, label: "Home" },
+    { href: "/assignments", icon: Home, label: "Home" },
     { href: "/audit", icon: Shield, label: "Audit" },
   ];
 

@@ -6,8 +6,8 @@ import {
   Button, Avatar, Chip, Input
 } from "@heroui/react";
 import { 
-  ArrowLeft, Check, ListUl, Magnifier, ChevronRight, Xmark, Sliders
-} from "@gravity-ui/icons";
+  ArrowLeft, Check, ListUl, Search, ChevronRight, X, Sliders
+} from "lucide-react";
 import { useGradingStore } from "@/lib/store/useGradingStore";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -234,7 +234,7 @@ function AppealsWorkspaceInner() {
                         'bg-warning/15 text-warning'
                       }`}>
                         {appeal.aiTriage === 'Likely Valid' ? <Check className="size-4" /> :
-                         appeal.aiTriage === 'Unlikely Valid' ? <Xmark className="size-4" /> :
+                         appeal.aiTriage === 'Unlikely Valid' ? <X className="size-4" /> :
                          <Sliders className="size-4" />}
                       </div>
                       <div className="flex-1 min-w-0">
@@ -276,7 +276,7 @@ function AppealsWorkspaceInner() {
                          {/* AI Extraction side */}
                          <div className="flex-1 bg-default/20 border border-border/40 rounded-xl p-5 overflow-y-auto custom-scrollbar min-h-[200px]">
                             <h4 className="text-xs font-semibold uppercase tracking-wider text-muted mb-3 flex items-center gap-1">
-                               <Magnifier className="size-3" /> AI Extracted Evidence
+                               <Search className="size-3" /> AI Extracted Evidence
                             </h4>
                             <div className="space-y-4">
                                {selectedSub?.criteria.map(c => (
@@ -329,7 +329,7 @@ function AppealsWorkspaceInner() {
                                setTimeout(() => setShowResolutionToast(false), 4000);
                              }}
                           >
-                             <Xmark className="size-4" /> Reject Appeal
+                             <X className="size-4" /> Reject Appeal
                           </Button>
                           <Button 
                              variant="primary" 
@@ -392,3 +392,4 @@ export default function AppealsWorkspace() {
     </Suspense>
   );
 }
+

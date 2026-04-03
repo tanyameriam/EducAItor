@@ -8,7 +8,7 @@ import {
   Layers, 
   FolderOpen,
   ArrowRight 
-} from '@gravity-ui/icons';
+} from 'lucide-react';
 
 const entryOptions = [
   {
@@ -122,3 +122,4 @@ export default function EntryStepPage() {
     </div>
   );
 }
+

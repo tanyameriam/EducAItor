@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useAssignmentWizard } from '../components/assignment-wizard-context';
 import { useRouter } from 'next/navigation';
-import { ArrowLeft, Rocket, Calendar, Check, Eye } from '@gravity-ui/icons';
+import { ArrowLeft, Rocket, Calendar, Check, Eye } from 'lucide-react';
 
 export default function ReviewStepPage() {
   const { state, updateState, resetWizard } = useAssignmentWizard();
@@ -308,3 +308,4 @@ export default function ReviewStepPage() {
     </div>
   );
 }
+

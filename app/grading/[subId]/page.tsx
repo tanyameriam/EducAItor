@@ -2,7 +2,7 @@
 
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Card, Button, Chip, Avatar } from "@heroui/react";
-import { ArrowLeft, ChevronRight, Pencil, TriangleExclamation, Shield, Check } from "@gravity-ui/icons";
+import { ArrowLeft, ChevronRight, Pencil, AlertTriangle, Shield, Check } from "lucide-react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
@@ -197,7 +197,7 @@ export default function GradingScreen() {
                     ))}
                     {qi === 1 && submission.id === "sub-2" && (
                       <div className="flex items-center gap-2 mt-1">
-                        <TriangleExclamation className="size-3 text-warning shrink-0" />
+                        <AlertTriangle className="size-3 text-warning shrink-0" />
                         <p className="text-[10px] text-warning font-medium">Smudge detected — OCR confidence 43%</p>
                       </div>
                     )}
@@ -212,7 +212,7 @@ export default function GradingScreen() {
             /* OCR Text content */
             <div className="w-full max-w-[800px] min-h-[1050px] bg-background shadow-sm border border-border/50 rounded-md p-10 flex flex-col gap-4">
               <div className="flex items-center gap-2 mb-4 bg-warning/10 border border-warning/20 rounded-lg px-3 py-2">
-                <TriangleExclamation className="size-4 text-warning shrink-0" />
+                <AlertTriangle className="size-4 text-warning shrink-0" />
                 <p className="text-xs text-warning font-medium">
                   OCR Extracted Text — accuracy varies per paragraph. Switch to "Original Scan" to verify flagged regions.
                 </p>
@@ -352,7 +352,7 @@ export default function GradingScreen() {
                         )}
                         {item.confidence === "Weak" && (
                           <div title="OCR recognition degraded">
-                            <TriangleExclamation className="size-4 text-warning" />
+                            <AlertTriangle className="size-4 text-warning" />
                           </div>
                         )}
                         {item.isOverridden && (
@@ -410,7 +410,7 @@ export default function GradingScreen() {
                       </Button>
                       {(item.confidence === "Weak" || item.confidence === "Minimal") && !item.isOverridden && (
                         <span className="text-xs font-medium text-warning flex items-center pr-2">
-                          <TriangleExclamation className="size-3 mr-1" /> Needs Review
+                          <AlertTriangle className="size-3 mr-1" /> Needs Review
                         </span>
                       )}
                     </Card.Footer>

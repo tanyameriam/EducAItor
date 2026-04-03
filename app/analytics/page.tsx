@@ -6,8 +6,8 @@ import {
   Card, Button, Avatar, Chip, ProgressBar
 } from "@heroui/react";
 import { 
-  ArrowLeft, ChartLine, CircleExclamation, TriangleRight, SquareHashtag, Pencil
-} from "@gravity-ui/icons";
+  ArrowLeft, BarChart3, AlertCircle, Triangle, Hash, Pencil
+} from "lucide-react";
 import { useGradingStore } from "@/lib/store/useGradingStore";
 import Link from "next/link";
 import { 
@@ -68,7 +68,7 @@ export default function AnalyticsDashboard() {
                   <p className="text-xs font-semibold text-muted uppercase tracking-wider mb-1">Average Score</p>
                   <div className="flex items-end gap-2">
                      <h2 className="text-3xl font-bold tracking-tight text-foreground">71.6%</h2>
-                     <span className="text-xs font-medium text-success mb-1 flex items-center"><TriangleRight className="rotate-[-90deg] size-3" /> 2.1%</span>
+                     <span className="text-xs font-medium text-success mb-1 flex items-center"><Triangle className="rotate-90 size-3" /> 2.1%</span>
                   </div>
                </Card.Content>
             </Card>
@@ -198,7 +198,7 @@ export default function AnalyticsDashboard() {
             <Card className="rounded-xl shadow-sm">
                <Card.Header>
                   <Card.Title className="flex items-center gap-2 text-sm uppercase tracking-wider">
-                     <SquareHashtag className="size-4 text-danger" /> Pattern & Anomaly Detection
+                     <Hash className="size-4 text-danger" /> Pattern & Anomaly Detection
                   </Card.Title>
                </Card.Header>
                <Card.Content>
@@ -297,7 +297,7 @@ function RubricHealthCards({ assignmentId }: { assignmentId?: string }) {
 
             {c.overrideRate > 30 && (
               <div className="mt-3 flex items-start gap-2 bg-danger/5 border border-danger/20 rounded-lg p-3">
-                <CircleExclamation className="size-3.5 text-danger shrink-0 mt-0.5" />
+                <AlertCircle className="size-3.5 text-danger shrink-0 mt-0.5" />
                 <div className="flex-1 min-w-0">
                   <p className="text-xs font-semibold text-danger">High Override Rate — Rubric Reword Suggested</p>
                   <p className="text-[10px] text-muted mt-0.5 leading-relaxed">

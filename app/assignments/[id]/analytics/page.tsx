@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { useParams } from "next/navigation";
 import { Card, Chip, ProgressBar } from "@heroui/react";
-import { ChartLine, CircleExclamation, Pencil, SquareHashtag } from "@gravity-ui/icons";
+import { BarChart3 as ChartLine, AlertCircle as CircleExclamation, Pencil, Hash as SquareHashtag } from "lucide-react";
 import { useGradingStore } from "@/lib/store/useGradingStore";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer, AreaChart, Area } from "recharts";
 

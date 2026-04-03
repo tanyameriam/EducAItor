@@ -3,7 +3,7 @@
 import { useAssignmentWizard } from '../components/assignment-wizard-context';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
-import { ArrowLeft, ArrowRight } from '@gravity-ui/icons';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
 
 export default function OutputStepPage() {
   const { state, updateState, completeStep, goToStep } = useAssignmentWizard();
@@ -231,3 +231,4 @@ export default function OutputStepPage() {
     </div>
   );
 }
+

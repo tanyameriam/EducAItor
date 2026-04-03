@@ -1,7 +1,7 @@
 'use client';
 
 import { useAssignmentWizard } from './assignment-wizard-context';
-import { Check } from '@gravity-ui/icons';
+import { Check } from 'lucide-react';
 
 export function WizardProgress() {
   const { currentStep, maxCompletedStep, steps, goToStep, canAccessStep } = useAssignmentWizard();
@@ -60,3 +60,4 @@ export function WizardProgress() {
     </div>
   );
 }
+

@@ -2,7 +2,7 @@
 
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Card, Button, Chip, Avatar, ProgressBar } from "@heroui/react";
-import { ArrowUpRight, Gear, ArrowRotateLeft } from "@gravity-ui/icons";
+import { ArrowUpRight, Settings as Gear, RotateCcw as ArrowRotateLeft } from "lucide-react";
 import { useGradingStore } from "@/lib/store/useGradingStore";
 import { formatRelativeTime } from "@/lib/utils/time";
 import Link from "next/link";

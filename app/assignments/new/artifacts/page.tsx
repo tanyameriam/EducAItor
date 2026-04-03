@@ -2,7 +2,7 @@
 
 import { useAssignmentWizard } from '../components/assignment-wizard-context';
 import { useRouter } from 'next/navigation';
-import { ArrowLeft, ArrowRight, Xmark } from '@gravity-ui/icons';
+import { ArrowLeft, ArrowRight, X } from 'lucide-react';
 
 export default function ArtifactsStepPage() {
   const { state, updateState, completeStep, goToStep } = useAssignmentWizard();
@@ -124,7 +124,7 @@ export default function ArtifactsStepPage() {
                           onClick={() => removeArtifact(artifact.id)}
                           className="p-2 text-muted-foreground hover:text-destructive transition-colors"
                         >
-                          <Xmark className="w-4 h-4" />
+                          <X className="w-4 h-4" />
                         </button>
                       </td>
                     </tr>
@@ -196,3 +196,4 @@ export default function ArtifactsStepPage() {
     </div>
   );
 }
+

@@ -3,7 +3,7 @@
 import { useAssignmentWizard } from '../components/assignment-wizard-context';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { ArrowLeft, ArrowRight, Target, Check } from '@gravity-ui/icons';
+import { ArrowLeft, ArrowRight, Target, Check } from 'lucide-react';
 
 // Sample submissions for calibration
 const calibrationSamples = [
@@ -319,3 +319,4 @@ export default function CalibrationStepPage() {
     </div>
   );
 }
+

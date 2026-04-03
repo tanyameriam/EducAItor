@@ -3,7 +3,7 @@
 import { useAssignmentWizard } from '../components/assignment-wizard-context';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { ArrowLeft, ArrowRight, File, Sparkles, Book, Pencil } from '@gravity-ui/icons';
+import { ArrowLeft, ArrowRight, File, Sparkles, Book, Pencil } from 'lucide-react';
 
 const rubricMethods = [
   {
@@ -343,3 +343,4 @@ export default function RubricStepPage() {
     </div>
   );
 }
+

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Button, Avatar, Chip, Switch } from "@heroui/react";
-import { ArrowLeft, Check, ListUl, Pencil, PaperPlane, Envelope, Clock } from "@gravity-ui/icons";
+import { ArrowLeft, Check, List as ListUl, Pencil, Send as PaperPlane, Mail as Envelope, Clock } from "lucide-react";
 import { useGradingStore, ReleaseSchedule } from "@/lib/store/useGradingStore";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -299,3 +299,4 @@ export default function FeedbackEditor() {
     </div>
   );
 }
+

@@ -1,6 +1,6 @@
 "use client";
 
-import { Moon, Sun } from "@gravity-ui/icons";
+import { Moon, Sun } from "lucide-react";
 import { Button } from "@heroui/react";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";

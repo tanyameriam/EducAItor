@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useGradingStore } from "@/lib/store/useGradingStore";
-import { LayoutList, ListCheck, SquareHashtag, ChartLine, Shield, CircleExclamation } from "@gravity-ui/icons";
+import { LayoutList, ListCheck, SquareHashtag, BarChart3, Shield, AlertCircle } from "lucide-react";
 
 interface Tab {
   id: string;
@@ -47,13 +47,13 @@ export function AssignmentTabs() {
       id: "analytics",
       label: "Analytics",
       href: `/assignments/${assignmentId}/analytics`,
-      icon: ChartLine,
+      icon: BarChart3,
     },
     {
       id: "appeals",
       label: assignmentAppealsCount > 0 ? `Appeals (${assignmentAppealsCount})` : "Appeals",
       href: "/appeals",
-      icon: CircleExclamation,
+      icon: AlertCircle,
     },
     {
       id: "audit",
@@ -115,3 +115,4 @@ export function AssignmentTabs() {
     </div>
   );
 }
+

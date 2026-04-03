@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Button, Chip } from "@heroui/react";
-import { Check, Clock, PaperPlane, Pencil, ChevronLeft, ChevronRight, Eye, Sparkles, ListUl, FileText } from "@gravity-ui/icons";
+import { Check, Clock, Send as PaperPlane, Pencil, ChevronLeft, ChevronRight, Eye, Sparkles, List as ListUl, FileText } from "lucide-react";
 import { useGradingStore, ReleaseSchedule, Feedback } from "@/lib/store/useGradingStore";
 import { useParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";

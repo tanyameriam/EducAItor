@@ -3,7 +3,7 @@
 import { useAssignmentWizard } from '../components/assignment-wizard-context';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { ArrowLeft, ArrowRight, BookOpen, Code, Picture, Flask, Folder, Briefcase, MagicWand } from '@gravity-ui/icons';
+import { ArrowLeft, ArrowRight, BookOpen, Code, Picture, Flask, Folder, Briefcase, MagicWand } from 'lucide-react';
 
 const assignmentTypes = [
   { id: 'written', label: 'Written / Essay', icon: BookOpen },
@@ -300,3 +300,4 @@ export default function DetailsStepPage() {
     </div>
   );
 }
+
