@@ -74,7 +74,7 @@ export default function InstructorDashboard() {
           <section className="space-y-6">
             <div className="flex items-center justify-between pb-2">
               <h2 className="text-[11px] font-black uppercase tracking-[0.1em] text-muted/50 leading-none">Active Assignments</h2>
-              <Link href="/assignments/list" className="text-[11px] font-bold text-accent hover:underline flex items-center gap-1 uppercase tracking-wider">
+              <Link href="/assignments/all" className="text-[11px] font-bold text-accent hover:underline flex items-center gap-1 uppercase tracking-wider">
                 See all assignments <ArrowUpRight className="size-3" />
               </Link>
             </div>
@@ -173,9 +173,11 @@ export default function InstructorDashboard() {
               ))}
             </div>
 
-            <Button variant="ghost" className="w-full bg-[#1a1a1a] border-white/5 py-8 rounded-2xl text-xs font-bold text-muted hover:bg-white/[0.03] uppercase tracking-[0.15em]">
-              View all assignments — past, drafts, and previous semesters
-            </Button>
+            <Link href="/assignments/all">
+              <Button variant="ghost" className="w-full bg-[#1a1a1a] border-white/5 py-8 rounded-2xl text-xs font-bold text-muted hover:bg-white/[0.03] uppercase tracking-[0.15em]">
+                View all assignments — past, drafts, and previous semesters
+              </Button>
+            </Link>
           </section>
         </div>
 
